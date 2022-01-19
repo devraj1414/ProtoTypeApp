@@ -96,7 +96,8 @@ class InitialViewController: UIViewController {
  
 Go to the Project Directory
  => bundle init    // This will create a Gemfile in Project Bundle
-        Edit Gemfile
+        Edit Gemfile with : source "https://rubygems.org"
+                    gem "fastlane"
  => bundle install  // This will install fastlane in your project
  => fastlane init
 //This will generate the Fastfile at path ./fastlane/Fastlane and Appfile at path./fastlane/Appfile

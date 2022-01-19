@@ -1,0 +1,34 @@
+#To Store All Automation Configuration
+
+desc "Create App on Developer Portal and App Store Connect"
+lane :create_app do
+	create_app_online #produce
+end
+
+platform :ios do
+	
+	before_all do
+		Dotenv.load ".env.ios"
+	end
+  
+	desc "Sync Signing"
+  		lane :signing do
+			sync_code_signing #match     
+			mapping = Actions.lane_context[
+				SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING
+			]
+			update_code_signing_settings(
+				profile_name: mapping[ENV['MATCH_APP_IDENTIFIER']]
+			)
+		end
+
+	desc "Build Binary"
+		lane :build do 	
+			signing		
+		end
+	
+	desc "Release"
+		lane :release do
+			build
+		end
+end
